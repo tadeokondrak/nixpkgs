@@ -731,6 +731,7 @@
   ./services/system/nscd.nix
   ./services/system/saslauthd.nix
   ./services/system/uptimed.nix
+  ./services/torrent/btpd.nix
   ./services/torrent/deluge.nix
   ./services/torrent/flexget.nix
   ./services/torrent/opentracker.nix
