@@ -23,6 +23,7 @@ luaevent,
 luacheck
 luaffi,,http://luarocks.org/dev,
 luuid,
+markdown,
 penlight,
 rapidjson,
 say,
