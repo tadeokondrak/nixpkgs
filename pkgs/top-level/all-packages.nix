@@ -1180,6 +1180,8 @@ in
 
   cfdyndns = callPackage ../applications/networking/dyndns/cfdyndns { };
 
+  charliecloud = callPackage ../applications/virtualization/charliecloud { };
+
   chelf = callPackage ../tools/misc/chelf { };
 
   cht-sh = callPackage ../tools/misc/cht.sh { };
@@ -16610,6 +16612,7 @@ in
   calligra = libsForQt5.callPackage ../applications/office/calligra {
     inherit (kdeApplications) akonadi-calendar akonadi-contacts;
     openjpeg = openjpeg_1;
+    poppler = poppler_0_61;
   };
 
   perkeep = callPackage ../applications/misc/perkeep { };
@@ -17730,7 +17733,7 @@ in
 
   graphicsmagick-imagemagick-compat = callPackage ../applications/graphics/graphicsmagick/compat.nix { };
 
-  grisbi = callPackage ../applications/office/grisbi { gtk = gtk2; };
+  grisbi = callPackage ../applications/office/grisbi { gtk = gtk3; };
 
   gtkpod = callPackage ../applications/audio/gtkpod { };
 
