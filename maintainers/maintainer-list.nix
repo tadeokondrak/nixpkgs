@@ -1219,6 +1219,11 @@
     github = "dgonyeo";
     name = "Derek Gonyeo";
   };
+  dhkl = {
+    email = "david@davidslab.com";
+    github = "dhl";
+    name = "David Leung";
+  };
   dipinhora = {
     email = "dipinhora+github@gmail.com";
     github = "dipinhora";
@@ -2733,6 +2738,11 @@
     github = "lo1tuma";
     name = "Mathias Schreck";
   };
+  loewenheim = {
+    email = "loewenheim@mailbox.org";
+    github = "loewenheim";
+    name = "Sebastian Zivota";
+  };
   lopsided98 = {
     email = "benwolsieffer@gmail.com";
     github = "lopsided98";
@@ -2772,6 +2782,11 @@
     email = "luc.linux@mailoo.org";
     github = "lucas8";
     name = "Luc Chabassier";
+  };
+  lucus16 = {
+    email = "lars.jellema@gmail.com";
+    github = "Lucus16";
+    name = "Lars Jellema";
   };
   ludo = {
     email = "ludo@gnu.org";
@@ -3518,6 +3533,11 @@
     email = "owen@olynch.me";
     github = "olynch";
     name = "Owen Lynch";
+  };
+  omnipotententity = {
+    email = "omnipotententity@gmail.com";
+    github = "omnipotententity";
+    name = "Michael Reilly";
   };
   OPNA2608 = {
     email = "christoph.neidahl@gmail.com";
