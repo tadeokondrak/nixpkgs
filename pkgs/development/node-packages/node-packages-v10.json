@@ -5,6 +5,7 @@
 , "bower"
 , "bower2nix"
 , "browserify"
+, "bash-language-server"
 , "castnow"
 , "clean-css"
 , "coffee-script"
