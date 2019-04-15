@@ -14325,6 +14325,9 @@ in
 
   system-sendmail = lowPrio (callPackage ../servers/mail/system-sendmail { });
 
+  sndio = callPackages ../servers/sndio { };
+  libsndio = sndio.dev;
+
   # PulseAudio daemons
 
   pulseaudio = callPackage ../servers/pulseaudio {
