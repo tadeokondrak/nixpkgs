@@ -14713,6 +14713,8 @@ in
     pulseaudio = pulseaudioFull;
   };
 
+  pulseaudio-module-sndio = callPackage ../applications/audio/pulseaudio-module-sndio { };
+
   bluez = bluez5;
 
   bluezFull = bluez.override {
