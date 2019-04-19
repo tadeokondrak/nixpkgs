@@ -1234,6 +1234,11 @@
     github = "disassembler";
     name = "Samuel Leathers";
   };
+  disserman = {
+    email = "disserman@gmail.com";
+    github = "divi255";
+    name = "Sergei S.";
+  };
   dizfer = {
     email = "david@izquierdofernandez.com";
     github = "dizfer";
@@ -1617,6 +1622,11 @@
     email = "nix@firefly.nu";
     github = "FireyFly";
     name = "Jonas Höglund";
+  };
+  flexw = {
+    email = "felix.weilbach@t-online.de";
+    github = "FlexW";
+    name = "Felix Weilbach";
   };
   flokli = {
     email = "flokli@flokli.de";
@@ -2895,6 +2905,11 @@
     email = "markus@wotringer.de";
     name = "Markus Wotringer";
   };
+  marius851000 = {
+    email = "mariusdavid@laposte.net";
+    name = "Marius David";
+    github = "marius851000";
+  };
   marsam = {
     email = "marsam@users.noreply.github.com";
     github = "marsam";
@@ -3302,6 +3317,11 @@
     github = "mvnetbiz";
     name = "Matt Votava";
   };
+  mwilsoninsight = {
+    email = "max.wilson@insight.com";
+    github = "mwilsoninsight";
+    name = "Max Wilson";
+  };
   myrl = {
     email = "myrl.0xf@gmail.com";
     github = "myrl";
@@ -3440,6 +3460,11 @@
     email = "nocoolnametom@gmail.com";
     github = "nocoolnametom";
     name = "Tom Doggett";
+  };
+  nomeata = {
+    email = "mail@joachim-breitner.de";
+    github = "nomeata";
+    name = "Joachim Breitner";
   };
   noneucat = {
     email = "andy@lolc.at";
@@ -4594,6 +4619,11 @@
     github = "stumoss";
     name = "Stuart Moss";
   };
+  suhr = {
+    email = "suhr@i2pmail.org";
+    github = "suhr";
+    name = "Сухарик";
+  };
   SuprDewd = {
     email = "suprdewd@gmail.com";
     github = "SuprDewd";
@@ -5247,6 +5277,11 @@
     github = "xnwdd";
     name = "Guillermo NWDD";
   };
+  xrelkd = {
+    email = "46590321+xrelkd@users.noreply.github.com";
+    github = "xrelkd";
+    name = "xrelkd";
+  };
   xurei = {
     email = "olivier.bourdoux@gmail.com";
     github = "xurei";
@@ -5426,4 +5461,14 @@
     github = "shazow";
     name = "Andrey Petrov";
   };
+  freezeboy = {
+    email = "freezeboy@users.noreply.github.com";
+    github = "freezeboy";
+    name = "freezeboy";
+  };
+  tesq0 = {
+  	email = "mikolaj.galkowski@gmail.com";
+    github = "tesq0";
+    name = "Mikolaj Galkowski";
+	};
 }
