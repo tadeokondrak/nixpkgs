@@ -24052,4 +24052,6 @@ in
 
   wasmtime = callPackage ../development/interpreters/wasmtime {};
 
+  bemenu = callPackage ../applications/misc/bemenu { };
+
 }
