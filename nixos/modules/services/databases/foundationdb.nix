@@ -37,6 +37,10 @@ let
     storage_memory = ${cfg.storageMemory}
     trace_format   = ${cfg.traceFormat}
 
+    ${optionalString (lib.versionAtLeast cfg.package.version "6.1") ''
+    trace_format   = ${cfg.traceFormat}
+    ''}
+
     ${optionalString (cfg.tls != null) ''
       tls_plugin           = ${pkg}/libexec/plugins/FDBLibTLS.so
       tls_certificate_file = ${cfg.tls.certificate}
@@ -327,6 +331,15 @@ in
   };
 
   config = mkIf cfg.enable {
+    assertions = [
+      { assertion = lib.versionOlder cfg.package.version "6.1" -> cfg.traceFormat == "xml";
+        message = ''
+          Versions of FoundationDB before 6.1 do not support configurable trace formats (only XML is supported).
+          This option has no effect for version '' + cfg.package.version + '', and enabling it is an error.
+        '';
+      }
+    ];
+
     environment.systemPackages = [ pkg ];
 
     users.users = optionalAttrs (cfg.user == "foundationdb") (singleton

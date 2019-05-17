@@ -447,6 +447,8 @@ in
 
   actkbd = callPackage ../tools/system/actkbd { };
 
+  adafruit-ampy = callPackage ../tools/misc/adafruit-ampy { };
+
   adlplug = callPackage ../applications/audio/adlplug { };
 
   opnplug = callPackage ../applications/audio/adlplug {
@@ -646,6 +648,8 @@ in
   ec2_ami_tools = callPackage ../tools/virtualization/ec2-ami-tools { };
 
   altermime = callPackage ../tools/networking/altermime {};
+
+  alttab = callPackage ../tools/X11/alttab { };
 
   amule = callPackage ../tools/networking/p2p/amule { };
 
@@ -1529,6 +1533,8 @@ in
 
   fzy = callPackage ../tools/misc/fzy { };
 
+  g2o = callPackage ../development/libraries/g2o { };
+
   gbsplay = callPackage ../applications/audio/gbsplay { };
 
   gdrivefs = python27Packages.gdrivefs;
@@ -1928,11 +1934,7 @@ in
 
   bepasty = callPackage ../tools/misc/bepasty { };
 
-  bettercap = callPackage ../tools/security/bettercap {
-    # XXX: this is failing with Go 1.12. Error is related to cgo, an
-    # update to this package might fix it.
-    buildGoPackage = buildGo111Package;
-  };
+  bettercap = callPackage ../tools/security/bettercap { };
 
   bfg-repo-cleaner = gitAndTools.bfg-repo-cleaner;
 
@@ -3973,6 +3975,8 @@ in
 
   libcpuid = callPackage ../tools/misc/libcpuid { };
 
+  libcsptr = callPackage ../development/libraries/libcsptr { };
+
   libscrypt = callPackage ../development/libraries/libscrypt { };
 
   libcloudproviders = callPackage ../development/libraries/libcloudproviders { };
@@ -4434,8 +4438,6 @@ in
 
   memtier-benchmark = callPackage ../tools/networking/memtier-benchmark { };
 
-  memtest86 = callPackage ../tools/misc/memtest86 { };
-
   memtest86-efi = callPackage ../tools/misc/memtest86-efi { };
 
   memtest86plus = callPackage ../tools/misc/memtest86+ { };
@@ -4847,6 +4849,8 @@ in
 
   nwdiag = with python3Packages; toPythonApplication nwdiag;
 
+  nyancat = callPackage ../tools/misc/nyancat { };
+
   nylon = callPackage ../tools/networking/nylon { };
 
   nzbget = callPackage ../tools/networking/nzbget { };
@@ -4887,7 +4891,7 @@ in
 
   ola = callPackage ../applications/misc/ola { };
 
-  olive-editor = libsForQt5.callPackage ../applications/video/olive-editor { 
+  olive-editor = libsForQt5.callPackage ../applications/video/olive-editor {
     inherit (darwin.apple_sdk.frameworks) CoreFoundation;
   };
 
@@ -6581,6 +6585,8 @@ in
 
   xbanish = callPackage ../tools/X11/xbanish { };
 
+  xbill = callPackage ../games/xbill { };
+
   xbrightness = callPackage ../tools/X11/xbrightness { };
 
   xkbvalidate = callPackage ../tools/X11/xkbvalidate { };
@@ -7941,6 +7947,9 @@ in
   cargo-bloat = callPackage ../development/tools/rust/cargo-bloat { };
   cargo-expand = callPackage ../development/tools/rust/cargo-expand { };
   cargo-fuzz = callPackage ../development/tools/rust/cargo-fuzz { };
+  cargo-make = callPackage ../development/tools/rust/cargo-make {
+    inherit (darwin.apple_sdk.frameworks) Security;
+  };
   cargo-sweep = callPackage ../development/tools/rust/cargo-sweep { };
   cargo-xbuild = callPackage ../development/tools/rust/cargo-xbuild { };
 
@@ -9007,6 +9016,8 @@ in
   dcadec = callPackage ../development/tools/dcadec { };
 
   dejagnu = callPackage ../development/tools/misc/dejagnu { };
+
+  devd = callPackage ../development/tools/devd { };
 
   devtodo = callPackage ../development/tools/devtodo { };
 
@@ -10608,13 +10619,9 @@ in
               then callPackage ../development/libraries/gnu-efi { }
             else null;
 
-  gnutls = callPackage
-    (if stdenv.isDarwin
-      # Avoid > 3.5.10 due to frameworks for now; see discussion on:
-      # https://github.com/NixOS/nixpkgs/commit/d6454e6a1
-      then ../development/libraries/gnutls/3.5.10.nix
-      else ../development/libraries/gnutls/3.6.nix)
-    { };
+  gnutls = callPackage ../development/libraries/gnutls/default.nix {
+    inherit (darwin.apple_sdk.frameworks) Security;
+  };
 
   gnutls-kdh = callPackage ../development/libraries/gnutls-kdh/3.5.nix {
     gperf = gperf_3_0;
@@ -14731,7 +14738,7 @@ in
 
   webhook = callPackage ../servers/http/webhook { };
 
-  winstone = callPackage ../servers/http/winstone { };
+  winstone = throw "Winstone is not supported anymore. Alternatives are Jetty or Tomcat.";
 
   xinetd = callPackage ../servers/xinetd { };
 
@@ -16086,8 +16093,12 @@ in
   docbook_xml_ebnf_dtd = callPackage ../data/sgml+xml/schemas/xml-dtd/docbook-ebnf { };
 
   inherit (callPackages ../data/sgml+xml/stylesheets/xslt/docbook-xsl { })
-    docbook_xsl
-    docbook_xsl_ns;
+    docbook-xsl-nons
+    docbook-xsl-ns;
+
+  # TODO: move this to aliases
+  docbook_xsl = docbook-xsl-nons;
+  docbook_xsl_ns = docbook-xsl-ns;
 
   documentation-highlighter = callPackage ../misc/documentation-highlighter { };
 
@@ -20460,7 +20471,10 @@ in
   wrapNeovim = callPackage ../applications/editors/neovim/wrapper.nix { };
 
   neovim-unwrapped = callPackage ../applications/editors/neovim {
-    lua = luajit;
+    lua =
+      # neovim doesn't work with luajit on aarch64: https://github.com/neovim/neovim/issues/7879
+      if stdenv.isAarch64 then lua5_1 else
+      luajit;
   };
 
   neovim = wrapNeovim neovim-unwrapped { };
