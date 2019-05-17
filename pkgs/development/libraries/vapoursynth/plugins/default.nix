@@ -13,6 +13,8 @@
 
   continuityfixer = pkgs.callPackage ./continuityfixer { };
 
+  eedi2 = pkgs.callPackage ./eedi2 { };
+
   f3kdb = pkgs.callPackage ./f3kdb { };
 
   # why ffms2? it's the real name of the library and how it's referred to in vapoursynth
