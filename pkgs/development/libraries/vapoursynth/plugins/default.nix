@@ -22,6 +22,8 @@
   # why ffms2? it's the real name of the library and how it's referred to in vapoursynth
   ffms2 = pkgs.ffms;
 
+  lsmashsource = pkgs.callPackage ./lsmashsource { };
+
   mvtools = pkgs.callPackage ./mvtools { };
 
   nnedi3 = pkgs.callPackage ./nnedi3 { };
