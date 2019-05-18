@@ -26,6 +26,8 @@
   # why ffms2? it's the real name of the library and how it's referred to in vapoursynth
   ffms2 = pkgs.ffms;
 
+  knlmeanscl = pkgs.callPackage ./knlmeanscl { };
+
   retinex = pkgs.callPackage ./retinex { };
 
   lsmashsource = pkgs.callPackage ./lsmashsource { };
