@@ -1,6 +1,8 @@
 { pkgs }:
 
 {
+  addgrain = pkgs.callPackage ./addgrain { };
+
   autocrop = pkgs.callPackage ./autocrop { };
 
   beziercurve = pkgs.callPackage ./beziercurve { };
