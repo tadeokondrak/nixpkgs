@@ -35,4 +35,6 @@
   sangnom = pkgs.callPackage ./sangnom { };
 
   tcanny = pkgs.callPackage ./tcanny { };
+
+  wwxd = pkgs.callPackage ./wwxd { };
 }
