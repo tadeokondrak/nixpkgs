@@ -42,5 +42,7 @@
 
   tcanny = pkgs.callPackage ./tcanny { };
 
+  tnlmeans = pkgs.callPackage ./tnlmeans { };
+
   wwxd = pkgs.callPackage ./wwxd { };
 }
