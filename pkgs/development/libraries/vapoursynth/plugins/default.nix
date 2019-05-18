@@ -27,4 +27,6 @@
   nnedi3 = pkgs.callPackage ./nnedi3 { };
 
   sangnom = pkgs.callPackage ./sangnom { };
+
+  tcanny = pkgs.callPackage ./tcanny { };
 }
