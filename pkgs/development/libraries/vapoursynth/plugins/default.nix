@@ -21,4 +21,6 @@
   ffms2 = pkgs.ffms;
 
   mvtools = pkgs.callPackage ./mvtools { };
+
+  nnedi3 = pkgs.callPackage ./nnedi3 { };
 }
