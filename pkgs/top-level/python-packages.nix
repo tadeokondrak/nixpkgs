@@ -5577,6 +5577,10 @@ in {
   vapoursynth = disabledIf (!pythonAtLeast "3.7") (toPythonModule (pkgs.vapoursynth.override {
     python3 = python;
   })).python;
+
+  vapoursynth-descale = (toPythonModule (pkgs.vapoursynthPlugins.descale.override {
+    inherit python;
+  }));
 });
 
 in fix' (extends overrides packages)

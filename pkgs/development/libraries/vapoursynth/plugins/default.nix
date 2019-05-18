@@ -15,6 +15,8 @@
 
   continuityfixer = pkgs.callPackage ./continuityfixer { };
 
+  descale = pkgs.callPackage ./descale { };
+
   fmtconv = pkgs.callPackage ./fmtconv { };
 
   eedi2 = pkgs.callPackage ./eedi2 { };
