@@ -11426,6 +11426,18 @@ let
     };
   };
 
+  NetNetmask = buildPerlPackage rec {
+    name = "Net-Netmask-1.9104";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/J/JM/JMASLAK/${name}.tar.gz";
+      sha256 = "17li2svymz49az35xl6galp4b9qcnb985gzklhikkvkn9da6rz3y";
+    };
+    buildInputs = [ Test2Suite TestUseAllModules ];
+    meta = {
+      description = "Parse, manipulate and lookup IP network blocks";
+    };
+  };
+
   NetOAuth = buildPerlModule {
     name = "Net-OAuth-0.28";
     src = fetchurl {
@@ -11656,6 +11668,22 @@ let
       description = "A perl interface to the Twitter API";
       license = with stdenv.lib.licenses; [ artistic1 gpl1Plus ];
     };
+  };
+
+  NetWhoisIP = buildPerlPackage rec {
+    name = "Net-Whois-IP-1.19";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/B/BS/BSCHMITZ/${name}.tar.gz";
+      sha256 = "08kj2h9qiyfvv3jfz619xl796j93cslg7d96919mnrnjy6hdz6zh";
+    };
+
+    propagatedBuildInputs = [ RegexpIPv6 LWPProtocolhttps ];
+    doCheck = false;
+
+    # https://rt.cpan.org/Public/Bug/Display.html?id=99377
+    postPatch = ''
+      substituteInPlace IP.pm --replace " AutoLoader" ""
+    '';
   };
 
   NetWorks = buildPerlPackage {
@@ -12610,32 +12638,36 @@ let
   };
 
   Po4a = buildPerlPackage rec {
-    name = "po4a-0.47";
+    name = "po4a-${version}";
+    version = "0.55";
     src = fetchurl {
-      url = "https://alioth.debian.org/frs/download.php/file/4142/po4a-0.47.tar.gz";
-      sha256 = "5010e1b7df1115cbd475f46587fc05fefc97301f9bba0c2f15106005ca017507";
+      url = "https://github.com/mquinson/po4a/releases/download/v${version}/po4a-${version}.tar.gz";
+      sha256 = "1qss4q5df3nsydsbggb7gg50bn0kdxq5wn8riqm9zwkiq6a4bifg";
     };
-    nativeBuildInputs = [ pkgs.docbook_xsl pkgs.docbook_xsl pkgs.docbook_xsl_ns ];
-    propagatedBuildInputs = [ TextWrapI18N LocaleGettext TermReadKey SGMLSpm ModuleBuild UnicodeLineBreak ModuleBuild ];
-    buildInputs = [ pkgs.gettext pkgs.libxslt pkgs.glibcLocales pkgs.docbook_xml_dtd_412 pkgs.docbook_sgml_dtd_41 pkgs.texlive.combined.scheme-basic pkgs.jade ];
-    LC_ALL="en_US.UTF-8";
+    nativeBuildInputs = [ pkgs.docbook_xsl pkgs.docbook_xsl_ns ModuleBuild ];
+    propagatedBuildInputs = [ TextWrapI18N LocaleGettext TermReadKey SGMLSpm UnicodeLineBreak PodParser YAMLTiny ];
+    buildInputs = [ pkgs.gettext pkgs.libxslt pkgs.glibcLocales pkgs.docbook_xml_dtd_412 pkgs.docbook_sgml_dtd_41 pkgs.texlive.combined.scheme-basic pkgs.opensp ];
+    LC_ALL = "en_US.UTF-8";
     SGML_CATALOG_FILES = "${pkgs.docbook_xml_dtd_412}/xml/dtd/docbook/catalog.xml";
     preConfigure = ''
       touch Makefile.PL
       export PERL_MB_OPT="--install_base=$out --prefix=$out"
-      substituteInPlace Po4aBuilder.pm --replace "\$self->install_sets(\$self->installdirs)->{'bindoc'}" "'$out/share/man/man1'"
     '';
-
     buildPhase = "perl Build.PL --install_base=$out --install_path=\"lib=$out/${perl.libPrefix}\"; ./Build build";
-    installPhase = "./Build install";
     checkPhase = ''
       export SGML_CATALOG_FILES=${pkgs.docbook_sgml_dtd_41}/sgml/dtd/docbook-4.1/docbook.cat
       ./Build test
     '';
+    installPhase = ''
+      ./Build install
+      for f in $out/bin/*; do
+        substituteInPlace $f --replace "#! /usr/bin/env perl" "#!${perl}/bin/perl"
+      done
+    '';
     meta = {
-      homepage = https://po4a.alioth.debian.org/;
-      description = "tools for helping translation of documentation";
-      license = with stdenv.lib.licenses; [ gpl2 ];
+      homepage = "https://po4a.org/";
+      description = "Tools for helping translation of documentation";
+      license = stdenv.lib.licenses.gpl2;
     };
   };
 
@@ -14138,6 +14170,14 @@ let
     src = fetchurl {
       url = mirror://cpan/authors/id/C/CG/CGRAU/String-MkPasswd-0.05.tar.gz;
       sha256 = "15lvcc8c9hp6mg3jx02wd3b85aphn8yl5db62q3pam04c0sgh42k";
+    };
+  };
+
+  StringRandom = buildPerlModule rec {
+    name = "String-Random-0.30";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/S/SH/SHLOMIF/${name}.tar.gz";
+      sha256 = "06xdpyjc53al0a4ib2lw1m388v41z97hzqbdkd00w3nmjsdrn4w1";
     };
   };
 
