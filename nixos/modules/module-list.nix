@@ -94,6 +94,7 @@
   ./programs/ccache.nix
   ./programs/cdemu.nix
   ./programs/chromium.nix
+  ./programs/clickshare.nix
   ./programs/command-not-found/command-not-found.nix
   ./programs/criu.nix
   ./programs/dconf.nix
@@ -182,6 +183,7 @@
   ./services/amqp/activemq/default.nix
   ./services/amqp/rabbitmq.nix
   ./services/audio/alsa.nix
+  ./services/audio/jack.nix
   ./services/audio/icecast.nix
   ./services/audio/liquidsoap.nix
   ./services/audio/mpd.nix
@@ -540,7 +542,6 @@
   ./services/networking/autossh.nix
   ./services/networking/bird.nix
   ./services/networking/bitlbee.nix
-  ./services/networking/btsync.nix
   ./services/networking/charybdis.nix
   ./services/networking/chrony.nix
   ./services/networking/cjdns.nix
@@ -762,6 +763,7 @@
   ./services/web-apps/frab.nix
   ./services/web-apps/icingaweb2/icingaweb2.nix
   ./services/web-apps/icingaweb2/module-monitoring.nix
+  ./services/web-apps/limesurvey.nix
   ./services/web-apps/mattermost.nix
   ./services/web-apps/miniflux.nix
   ./services/web-apps/nextcloud.nix
