@@ -466,6 +466,8 @@ in
     wxGTK = wxGTK30;
   } // (config.aegisub or {}));
 
+  aerc = callPackage ../applications/networking/mailreaders/aerc { };
+
   aerospike = callPackage ../servers/nosql/aerospike { };
 
   aespipe = callPackage ../tools/security/aespipe { };
@@ -1750,6 +1752,8 @@ in
 
   pev = callPackage ../development/tools/analysis/pev { };
 
+  phoronix-test-suite = callPackage ../tools/misc/phoronix-test-suite { };
+
   photon = callPackage ../tools/networking/photon { };
 
   playerctl = callPackage ../tools/audio/playerctl { };
@@ -2145,11 +2149,13 @@ in
 
   colormake = callPackage ../development/tools/build-managers/colormake { };
 
-  ethash = callPackage ../development/libraries/ethash { };
-
   cpuminer = callPackage ../tools/misc/cpuminer { };
 
   cpuminer-multi = callPackage ../tools/misc/cpuminer-multi { };
+
+  cryptpad = callPackage ../servers/web-apps/cryptpad { };
+
+  ethash = callPackage ../development/libraries/ethash { };
 
   ethminer = callPackage ../tools/misc/ethminer { };
 
@@ -2732,6 +2738,13 @@ in
           sha256 = "f15516df478d5a56180fbf80e68f206010e6d160fc39fa508b65e035fd75130b";
         };
       });
+      pyyaml = super.pyyaml.overridePythonAttrs (oldAttrs: rec {
+        version = "3.12";
+        src = oldAttrs.src.override {
+          inherit version;
+          sha256 = "1aqjl8dk9amd4zr99n8v2qxzgmr2hdvqfma4zh7a41rj6336c9sr";
+        };
+      });
     };
   }).pkgs; toPythonApplication elasticsearch-curator;
 
@@ -2899,7 +2912,10 @@ in
 
   flatpak-builder = callPackage ../development/tools/flatpak-builder { };
 
-  fltrdr = callPackage ../tools/misc/fltrdr { stdenv = gcc8Stdenv; };
+  fltrdr = callPackage ../tools/misc/fltrdr {
+    stdenv = gcc8Stdenv;
+    icu = icu63;
+  };
 
   fluent-bit = callPackage ../tools/misc/fluent-bit {
     stdenv = gccStdenv;
@@ -10915,8 +10931,13 @@ in
   } // (stdenv.lib.optionalAttrs (stdenv.cc.isGNU && stdenv.hostPlatform.isi686) {
       stdenv = overrideCC stdenv gcc6; # with gcc-7: undefined reference to `__divmoddi4'
     }));
+  icu64 = callPackage ../development/libraries/icu/64.nix ({
+    nativeBuildRoot = buildPackages.icu64.override { buildRootOnly = true; };
+  } // (stdenv.lib.optionalAttrs (stdenv.cc.isGNU && stdenv.hostPlatform.isi686) {
+      stdenv = overrideCC stdenv gcc6; # with gcc-7: undefined reference to `__divmoddi4'
+    }));
 
-  icu = icu59;
+  icu = icu64;
 
   id3lib = callPackage ../development/libraries/id3lib { };
 
@@ -11007,6 +11028,8 @@ in
 
   jsonnet = callPackage ../development/compilers/jsonnet { };
 
+  go-jsonnet = callPackage ../development/compilers/go-jsonnet { };
+
   jsonrpc-glib = callPackage ../development/libraries/jsonrpc-glib { };
 
   jxrlib = callPackage ../development/libraries/jxrlib { };
@@ -11045,7 +11068,9 @@ in
   libkrb5 = krb5.override { type = "lib"; };
   kerberos = libkrb5; # TODO: move to aliases.nix
 
-  l-smash = callPackage ../development/libraries/l-smash { };
+  l-smash = callPackage ../development/libraries/l-smash {
+    stdenv = gccStdenv;
+  };
 
   languageMachines = recurseIntoAttrs (import ../development/libraries/languagemachines/packages.nix { inherit callPackage; });
 
@@ -12438,7 +12463,7 @@ in
 
   opencv3 = callPackage ../development/libraries/opencv/3.x.nix {
     inherit (darwin) cf-private;
-    inherit (darwin.apple_sdk.frameworks) AVFoundation Cocoa QTKit VideoDecodeAcceleration;
+    inherit (darwin.apple_sdk.frameworks) AVFoundation Cocoa VideoDecodeAcceleration;
   };
 
   opencv3WithoutCuda = opencv3.override {
@@ -12447,7 +12472,7 @@ in
 
   opencv4 = callPackage ../development/libraries/opencv/4.x.nix {
     inherit (darwin) cf-private;
-    inherit (darwin.apple_sdk.frameworks) AVFoundation Cocoa QTKit VideoDecodeAcceleration;
+    inherit (darwin.apple_sdk.frameworks) AVFoundation Cocoa VideoDecodeAcceleration;
   };
 
   openexr = callPackage ../development/libraries/openexr { };
@@ -13964,9 +13989,10 @@ in
   ### DEVELOPMENT / PERL MODULES
 
   perlInterpreters = callPackages ../development/interpreters/perl {};
-  inherit (perlInterpreters) perl528 perldevel;
+  inherit (perlInterpreters) perl528 perl530 perldevel;
 
   perl528Packages = recurseIntoAttrs perl528.pkgs;
+  perl530Packages = recurseIntoAttrs perl530.pkgs;
   perldevelPackages = perldevel.pkgs;
 
   perl = perl528;
@@ -14604,6 +14630,9 @@ in
   prometheus-unifi-exporter = callPackage ../servers/monitoring/prometheus/unifi-exporter { };
   prometheus-varnish-exporter = callPackage ../servers/monitoring/prometheus/varnish-exporter.nix { };
   prometheus-jmx-httpserver = callPackage ../servers/monitoring/prometheus/jmx-httpserver.nix {  };
+  prometheus-wireguard-exporter = callPackage ../servers/monitoring/prometheus/wireguard-exporter.nix {
+    inherit (darwin.apple_sdk.frameworks) Security;
+  };
 
   prometheus-cpp = callPackage ../development/libraries/prometheus-cpp { };
 
@@ -15429,8 +15458,6 @@ in
 
     sch_cake = callPackage ../os-specific/linux/sch_cake { };
 
-    spl = callPackage ../os-specific/linux/spl { };
-
     sysdig = callPackage ../os-specific/linux/sysdig {};
 
     systemtap = callPackage ../development/tools/profiling/systemtap { };
@@ -15459,7 +15486,7 @@ in
 
     inherit (callPackage ../os-specific/linux/zfs {
       configFile = "kernel";
-      inherit kernel spl;
+      inherit kernel;
      }) zfsStable zfsUnstable;
 
      zfs = zfsStable;
@@ -16499,6 +16526,8 @@ in
   proggyfonts = callPackage ../data/fonts/proggyfonts { };
 
   public-sans  = callPackage ../data/fonts/public-sans { };
+
+  publicsuffix-list = callPackage ../data/misc/publicsuffix-list { };
 
   qogir-theme = callPackage ../data/themes/qogir { };
 
@@ -19296,6 +19325,8 @@ in
   pdfdiff = callPackage ../applications/misc/pdfdiff { };
 
   mupdf = callPackage ../applications/misc/mupdf { };
+
+  mystem = callPackage ../applications/misc/mystem { };
 
   diffpdf = libsForQt5.callPackage ../applications/misc/diffpdf { };
 
