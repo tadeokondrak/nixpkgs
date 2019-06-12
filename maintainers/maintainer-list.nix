@@ -5071,6 +5071,11 @@
     github = "thedavidmeister";
     name = "David Meister";
   };
+  thefloweringash = {
+    email = "lorne@cons.org.nz";
+    github = "thefloweringash";
+    name = "Andrew Childs";
+  };
   thesola10 = {
     email = "thesola10@bobile.fr";
     github = "thesola10";
@@ -5154,6 +5159,11 @@
     email = "nix@tobim.fastmail.fm";
     github = "tobimpub";
     name = "Tobias Mayer";
+  };
+  tobiasBora = {
+    email = "tobias.bora.list@gmail.com";
+    github = "tobiasBora";
+    name = "Tobias Bora";
   };
   tohl = {
     email = "tom@logand.com";

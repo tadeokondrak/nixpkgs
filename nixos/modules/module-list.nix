@@ -326,6 +326,7 @@
   ./services/hardware/tcsd.nix
   ./services/hardware/tlp.nix
   ./services/hardware/thinkfan.nix
+  ./services/hardware/throttled.nix
   ./services/hardware/trezord.nix
   ./services/hardware/triggerhappy.nix
   ./services/hardware/u2f.nix
@@ -610,6 +611,7 @@
   ./services/networking/morty.nix
   ./services/networking/miredo.nix
   ./services/networking/mstpd.nix
+  ./services/networking/mtprotoproxy.nix
   ./services/networking/murmur.nix
   ./services/networking/mxisd.nix
   ./services/networking/namecoind.nix
