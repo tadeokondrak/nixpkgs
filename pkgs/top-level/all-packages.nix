@@ -22054,6 +22054,8 @@ in
     inherit (darwin.apple_sdk.frameworks) ApplicationServices;
   };
 
+  vapoursynth-editor = libsForQt5.callPackage ../development/libraries/vapoursynth/editor.nix { };
+
   vapoursynth-mvtools = callPackage ../development/libraries/vapoursynth-mvtools { };
 
   vassal = callPackage ../games/vassal { };
