@@ -681,6 +681,11 @@
     github = "bergey";
     name = "Daniel Bergey";
   };
+  betaboon = {
+    email = "betaboon@0x80.ninja";
+    github = "betaboon";
+    name = "betaboon";
+  };
   bfortz = {
     email = "bernard.fortz@gmail.com";
     github = "bfortz";
@@ -3559,6 +3564,11 @@
     github = "nathan-gs";
     name = "Nathan Bijnens";
   };
+  nathyong = {
+    email = "nathyong@noreply.github.com";
+    github = "nathyong";
+    name = "Nathan Yong";
+  };
   nckx = {
     email = "github@tobias.gr";
     github = "nckx";
@@ -4840,6 +4850,11 @@
     email = "severen@shrike.me";
     github = "severen";
     name = "Severen Redwood";
+  };
+  steell = {
+    email = "steve@steellworks.com";
+    github = "Steell";
+    name = "Steve Elliott";
   };
   stephenmw = {
     email = "stephen@q5comm.com";
