@@ -1945,6 +1945,11 @@
     github = "glenns";
     name = "Glenn Searby";
   };
+  gloaming = {
+    email = "ch9871@gmail.com";
+    github = "gloaming";
+    name = "Craig Hall";
+  };
   globin = {
     email = "mail@glob.in";
     github = "globin";
@@ -2757,6 +2762,11 @@
     email = "lasandell@gmail.com";
     github = "lasandell";
     name = "Luke Sandell";
+  };
+  lambda-11235 = {
+    email = "taranlynn0@gmail.com";
+    github = "lambda-11235";
+    name = "Taran Lynn";
   };
   lassulus = {
     email = "lassulus@gmail.com";
