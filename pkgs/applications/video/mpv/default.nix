@@ -28,10 +28,6 @@
   , libdrm ? null
   , mesa   ? null
 
-, drmSupport ? stdenv.isLinux
-  , libdrm ? null
-  , mesa   ? null
-
 , alsaSupport        ? stdenv.isLinux, alsaLib       ? null
 , bluraySupport      ? true,           libbluray     ? null
 , bs2bSupport        ? true,           libbs2b       ? null
