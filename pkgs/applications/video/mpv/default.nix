@@ -1,7 +1,7 @@
 { config, stdenv, fetchurl, fetchFromGitHub, makeWrapper
 , docutils, perl, pkgconfig, python3, which, ffmpeg_4
 , freefont_ttf, freetype, libass, libpthreadstubs, mujs
-, nv-codec-headers, lua, libuchardet, libiconv ? null, darwin
+, nv-codec-headers, lua, libuchardet, libiconv ? null, libplacebo, darwin
 
 , waylandSupport ? stdenv.isLinux
   , wayland           ? null
@@ -20,9 +20,9 @@
   , libcdio-paranoia ? null
 
 , vulkanSupport ? stdenv.isLinux
-  , shaderc ? null
+  , shaderc        ? null
   , vulkan-headers ? null
-  , vulkan-loader ? null
+  , vulkan-loader  ? null
 
 , drmSupport ? stdenv.isLinux
   , libdrm ? null
@@ -95,16 +95,16 @@ let
              "http://www.freehackers.org/~tnagy/release/waf-${wafVersion}" ];
     sha256 = "0j7sbn3w6bgslvwwh5v9527w3gi2sd08kskrgxamx693y0b0i3ia";
   };
-  luaEnv = lua.withPackages(ps: with ps; [ luasocket ]);
+  luaEnv = lua.withPackages (ps: with ps; [ luasocket ]);
 
 in stdenv.mkDerivation rec {
-  name = "mpv-${version}";
+  pname = "mpv";
   version = "0.29.1";
 
   src = fetchFromGitHub {
     owner = "mpv-player";
-    repo  = "mpv";
-    rev    = "v${version}";
+    repo = "mpv";
+    rev = "v${version}";
     sha256 = "138921kx8g6qprim558xin09xximjhsj9ss8b71ifg2m6kclym8m";
   };
 
@@ -144,7 +144,7 @@ in stdenv.mkDerivation rec {
 
   buildInputs = [
     ffmpeg_4 freetype libass libpthreadstubs
-    luaEnv libuchardet mujs
+    luaEnv libuchardet mujs libplacebo
   ] ++ optional alsaSupport        alsaLib
     ++ optional archiveSupport     libarchive
     ++ optional bluraySupport      libbluray
