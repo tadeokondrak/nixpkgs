@@ -16,11 +16,11 @@ assert guiSupport -> pinentry != null;
 stdenv.mkDerivation rec {
   name = "gnupg-${version}";
 
-  version = "2.2.16";
+  version = "2.2.17";
 
   src = fetchurl {
     url = "mirror://gnupg/gnupg/${name}.tar.bz2";
-    sha256 = "1jqlzp9b3kpfp1dkjqskm67jjrhvf9nh3lzf45321p7m9d2qvgkc";
+    sha256 = "056mgy09lvsi03531a437qj58la1j2x1y1scvfi53diris3658mg";
   };
 
   depsBuildBuild = [ buildPackages.stdenv.cc ];
@@ -32,10 +32,7 @@ stdenv.mkDerivation rec {
 
   patches = [
     ./fix-libusb-include-path.patch
-    (fetchpatch {
-      url = https://files.gnupg.net/file/data/qmxjhc6kuja3orybj7st/PHID-FILE-vvzlnw36427pdnug2amc/file;
-      sha256 = "13snxkmlgmvn0rgxh5k2sgxkp5mbxqiznzm45sw649nvs3ccghq8";
-    })
+    ./0001-dirmngr-Only-use-SKS-pool-CA-for-SKS-pool.patch
   ];
   postPatch = ''
     sed -i 's,hkps://hkps.pool.sks-keyservers.net,hkps://keys.openpgp.org,g' \

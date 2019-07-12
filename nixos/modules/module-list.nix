@@ -492,6 +492,7 @@
   ./services/monitoring/heapster.nix
   ./services/monitoring/incron.nix
   ./services/monitoring/kapacitor.nix
+  ./services/monitoring/loki.nix
   ./services/monitoring/longview.nix
   ./services/monitoring/monit.nix
   ./services/monitoring/munin.nix
@@ -781,6 +782,7 @@
   ./services/web-apps/tt-rss.nix
   ./services/web-apps/selfoss.nix
   ./services/web-apps/virtlyst.nix
+  ./services/web-apps/wordpress.nix
   ./services/web-apps/youtrack.nix
   ./services/web-servers/apache-httpd/default.nix
   ./services/web-servers/caddy.nix
