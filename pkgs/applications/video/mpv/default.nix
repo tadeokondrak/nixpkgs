@@ -1,7 +1,7 @@
 { config, stdenv, fetchurl, fetchFromGitHub, makeWrapper
 , docutils, perl, pkgconfig, python3, which, ffmpeg_4
 , freefont_ttf, freetype, libass, libpthreadstubs, mujs
-, nv-codec-headers, lua, libuchardet, libiconv ? null, libplacebo, darwin
+, nv-codec-headers, lua, libuchardet, libiconv ? null, darwin
 
 , waylandSupport ? stdenv.isLinux
   , wayland           ? null
@@ -20,19 +20,16 @@
   , libcdio-paranoia ? null
 
 , vulkanSupport ? stdenv.isLinux
-  , shaderc        ? null
+  , shaderc ? null
   , vulkan-headers ? null
-  , vulkan-loader  ? null
-
-, drmSupport ? stdenv.isLinux
-  , libdrm ? null
-  , mesa   ? null
+  , vulkan-loader ? null
 
 , alsaSupport        ? stdenv.isLinux, alsaLib       ? null
 , bluraySupport      ? true,           libbluray     ? null
 , bs2bSupport        ? true,           libbs2b       ? null
 , cacaSupport        ? true,           libcaca       ? null
 , cmsSupport         ? true,           lcms2         ? null
+, drmSupport         ? stdenv.isLinux, libdrm        ? null
 , dvdnavSupport      ? stdenv.isLinux, libdvdnav     ? null
 , dvdreadSupport     ? stdenv.isLinux, libdvdread    ? null
 , libpngSupport      ? true,           libpng        ? null
@@ -65,7 +62,7 @@ assert bs2bSupport        -> available libbs2b;
 assert cacaSupport        -> available libcaca;
 assert cddaSupport        -> all available [libcdio libcdio-paranoia];
 assert cmsSupport         -> available lcms2;
-assert drmSupport         -> all available [ libdrm mesa ];
+assert drmSupport         -> available libdrm;
 assert dvdnavSupport      -> available libdvdnav;
 assert dvdreadSupport     -> available libdvdread;
 assert jackaudioSupport   -> available libjack2;
@@ -95,16 +92,16 @@ let
              "http://www.freehackers.org/~tnagy/release/waf-${wafVersion}" ];
     sha256 = "0j7sbn3w6bgslvwwh5v9527w3gi2sd08kskrgxamx693y0b0i3ia";
   };
-  luaEnv = lua.withPackages (ps: with ps; [ luasocket ]);
+  luaEnv = lua.withPackages(ps: with ps; [ luasocket ]);
 
 in stdenv.mkDerivation rec {
-  pname = "mpv";
+  name = "mpv-${version}";
   version = "0.29.1";
 
   src = fetchFromGitHub {
     owner = "mpv-player";
-    repo = "mpv";
-    rev = "v${version}";
+    repo  = "mpv";
+    rev    = "v${version}";
     sha256 = "138921kx8g6qprim558xin09xximjhsj9ss8b71ifg2m6kclym8m";
   };
 
@@ -144,13 +141,14 @@ in stdenv.mkDerivation rec {
 
   buildInputs = [
     ffmpeg_4 freetype libass libpthreadstubs
-    luaEnv libuchardet mujs libplacebo
+    luaEnv libuchardet mujs
   ] ++ optional alsaSupport        alsaLib
     ++ optional archiveSupport     libarchive
     ++ optional bluraySupport      libbluray
     ++ optional bs2bSupport        libbs2b
     ++ optional cacaSupport        libcaca
     ++ optional cmsSupport         lcms2
+    ++ optional drmSupport         libdrm
     ++ optional dvdreadSupport     libdvdread
     ++ optional jackaudioSupport   libjack2
     ++ optional libpngSupport      libpng
@@ -170,7 +168,6 @@ in stdenv.mkDerivation rec {
     ++ optional stdenv.isDarwin    libiconv
     ++ optional stdenv.isLinux     nv-codec-headers
     ++ optionals cddaSupport       [ libcdio libcdio-paranoia ]
-    ++ optionals drmSupport        [ libdrm mesa.dev ]
     ++ optionals dvdnavSupport     [ libdvdnav libdvdnav.libdvdread ]
     ++ optionals waylandSupport    [ wayland wayland-protocols libxkbcommon ]
     ++ optionals x11Support        [ libX11 libXext libGLU_combined libXxf86vm libXrandr ]

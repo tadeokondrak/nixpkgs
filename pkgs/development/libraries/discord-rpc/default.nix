@@ -1,5 +1,8 @@
-{ stdenv, fetchFromGitHub
-, cmake, rapidjson
+{ stdenv
+, fetchFromGitHub
+, cmake
+, rapidjson
+, AppKit
 , buildExamples ? false
 }:
 
@@ -14,8 +17,13 @@ stdenv.mkDerivation rec {
     sha256 = "04cxhqdv5r92lrpnhxf8702a8iackdf3sfk1050z7pijbijiql2a";
   };
 
-  nativeBuildInputs = [ cmake ];
-  buildInputs = [ rapidjson ];
+  nativeBuildInputs = [
+    cmake
+  ];
+
+  buildInputs = [
+    rapidjson
+  ] ++ stdenv.lib.optional stdenv.isDarwin AppKit;
 
   cmakeFlags = [
     "-DBUILD_SHARED_LIBS=true"

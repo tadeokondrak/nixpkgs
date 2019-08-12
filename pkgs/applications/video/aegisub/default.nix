@@ -1,28 +1,16 @@
-{ config
-, stdenv
-, fetchurl
-, libX11
-, wxGTK
-, libiconv
-, fontconfig
-, freetype
+{ config, stdenv, fetchurl
+, libX11, wxGTK
+, libiconv, fontconfig, freetype
 , libGLU_combined
-, libass
-, fftw
-, ffms
-, ffmpeg
-, pkgconfig
-, zlib
-, icu
-, boost
-, intltool
+, libass, fftw, ffms
+, ffmpeg, pkgconfig, zlib # Undocumented (?) dependencies
+, icu, boost, intltool # New dependencies
 , spellcheckSupport ? true, hunspell ? null
 , automationSupport ? true, lua ? null
 , openalSupport ? false, openal ? null
 , alsaSupport ? stdenv.isLinux, alsaLib ? null
 , pulseaudioSupport ? config.pulseaudio or stdenv.isLinux, libpulseaudio ? null
-, portaudioSupport ? false, portaudio ? null
-}:
+, portaudioSupport ? false, portaudio ? null }:
 
 assert spellcheckSupport -> (hunspell != null);
 assert automationSupport -> (lua != null);
@@ -31,56 +19,37 @@ assert alsaSupport -> (alsaLib != null);
 assert pulseaudioSupport -> (libpulseaudio != null);
 assert portaudioSupport -> (portaudio != null);
 
+with stdenv.lib;
 stdenv.mkDerivation rec {
-  pname = "aegisub";
+  name = "aegisub-${version}";
   version = "3.2.2";
 
   src = fetchurl {
-    url = "http://ftp.aegisub.org/pub/releases/${pname}-${version}.tar.xz";
+    url = "http://ftp.aegisub.org/pub/releases/${name}.tar.xz";
     sha256 = "11b83qazc8h0iidyj1rprnnjdivj1lpphvpa08y53n42bfa36pn5";
   };
 
-  # Fix build with icu-59
-  postPatch = ''
-    sed '1i#include <unicode/unistr.h>' -i src/utils.cpp
-  '';
+  # Fixup build with icu-59
+  postPatch = "sed '1i#include <unicode/unistr.h>' -i src/utils.cpp";
 
-  nativeBuildInputs = [
-    pkgconfig
-  ];
-
-  buildInputs = [
-    intltool
-    libX11
-    wxGTK
-    fontconfig
-    freetype
-    libGLU_combined
-    libass
-    fftw
-    ffms
-    ffmpeg
-    zlib
-    icu
-    boost
-    boost.out
-    libiconv
+  buildInputs = with stdenv.lib;
+  [ pkgconfig intltool libX11 wxGTK fontconfig freetype libGLU_combined
+    libass fftw ffms ffmpeg zlib icu boost boost.out libiconv
   ]
-    ++ stdenv.lib.optional spellcheckSupport hunspell
-    ++ stdenv.lib.optional automationSupport lua
-    ++ stdenv.lib.optional openalSupport openal
-    ++ stdenv.lib.optional alsaSupport alsaLib
-    ++ stdenv.lib.optional pulseaudioSupport libpulseaudio
-    ++ stdenv.lib.optional portaudioSupport portaudio;
+    ++ optional spellcheckSupport hunspell
+    ++ optional automationSupport lua
+    ++ optional openalSupport openal
+    ++ optional alsaSupport alsaLib
+    ++ optional pulseaudioSupport libpulseaudio
+    ++ optional portaudioSupport portaudio
+    ;
 
   enableParallelBuilding = true;
 
   hardeningDisable = [ "bindnow" "relro" ];
 
   # compat with icu61+ https://github.com/unicode-org/icu/blob/release-64-2/icu4c/readme.html#L554
-  CXXFLAGS = [
-    "-DU_USING_ICU_NAMESPACE=1"
-  ];
+  CXXFLAGS = [ "-DU_USING_ICU_NAMESPACE=1" ];
 
   # this is fixed upstream though not yet in an officially released version,
   # should be fine remove on next release (if one ever happens)
@@ -88,11 +57,9 @@ stdenv.mkDerivation rec {
     "-lpthread"
   ];
 
-  postInstall = ''
-    ln -s $out/bin/aegisub-* $out/bin/aegisub
-  '';
+  postInstall = "ln -s $out/bin/aegisub-* $out/bin/aegisub";
 
-  meta = with stdenv.lib; {
+  meta = {
     description = "An advanced subtitle editor";
     longDescription = ''
       Aegisub is a free, cross-platform open source tool for creating and
@@ -100,12 +67,12 @@ stdenv.mkDerivation rec {
       audio, and features many powerful tools for styling them, including a
       built-in real-time video preview.
     '';
-    homepage = "http://www.aegisub.org/";
-    # The Aegisub sources are itself BSD/ISC,
-    # but they are linked against GPL software
-    # - so the resulting program will be GPL
+    homepage = http://www.aegisub.org/;
     license = licenses.bsd3;
-    maintainers = with maintainers; [ AndersonTorres ];
+              # The Aegisub sources are itself BSD/ISC,
+              # but they are linked against GPL'd softwares
+              # - so the resulting program will be GPL
+    maintainers = [ maintainers.AndersonTorres ];
     platforms = [ "i686-linux" "x86_64-linux" ];
   };
 }
