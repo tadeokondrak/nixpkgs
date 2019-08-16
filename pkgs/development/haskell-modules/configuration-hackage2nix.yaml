@@ -5990,7 +5990,6 @@ broken-packages:
   - hp2any-core
   - hp2any-graph
   - hp2any-manager
-  - hpack
   - hpack-convert
   - hpack-dhall
   - hpaco
@@ -6237,7 +6236,6 @@ broken-packages:
   - http-conduit-browser
   - http-directory
   - http-dispatch
-  - http-download
   - http-enumerator
   - http-grammar
   - http-kinder
@@ -6579,7 +6577,6 @@ broken-packages:
   - join-api
   - joinlist
   - jonathanscard
-  - jose
   - jpeg
   - js-good-parts
   - jsaddle-hello
@@ -7792,7 +7789,6 @@ broken-packages:
   - pang-a-lambda
   - pangraph
   - panpipe
-  - pantry
   - pantry-tmp
   - papa-export
   - papa-implement
@@ -8767,7 +8763,6 @@ broken-packages:
   - servant-aeson-specs
   - servant-auth-cookie
   - servant-auth-hmac
-  - servant-auth-server
   - servant-auth-token
   - servant-auth-token-acid
   - servant-auth-token-api
@@ -9413,11 +9408,9 @@ broken-packages:
   - task-distribution
   - taskell
   - tasty-auto
-  - tasty-discover
   - tasty-fail-fast
   - tasty-groundhog-converters
   - tasty-hedgehog-coverage
-  - tasty-hspec
   - tasty-integrate
   - tasty-jenkins-xml
   - tasty-laws

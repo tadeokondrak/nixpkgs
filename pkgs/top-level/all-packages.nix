@@ -760,6 +760,8 @@ in
 
   crumbs = callPackage ../applications/misc/crumbs { };
 
+  crc32c = callPackage ../development/libraries/crc32c { };
+
   cue = callPackage ../development/tools/cue { };
 
   deskew = callPackage ../applications/graphics/deskew { };
@@ -3453,6 +3455,8 @@ in
 
   google-music-scripts = callPackage ../tools/audio/google-music-scripts { };
 
+  google-cloud-cpp = callPackage ../development/libraries/google-cloud-cpp { };
+
   gopro = callPackage ../tools/video/gopro { };
 
   gource = callPackage ../applications/version-management/gource { };
@@ -5953,7 +5957,9 @@ in
 
   seqdiag = with python3Packages; toPythonApplication seqdiag;
 
-  sequoia-tool = callPackage ../tools/security/sequoia-tool { inherit (llvmPackages) libclang; };
+  sequoia = callPackage ../tools/security/sequoia {
+    pythonPackages = python3Packages;
+  };
 
   sewer = callPackage ../tools/admin/sewer { };
 
@@ -6143,6 +6149,8 @@ in
   squashfuse = callPackage ../tools/filesystems/squashfuse { };
 
   srcml = callPackage ../applications/version-management/srcml { };
+
+  sourcehut = callPackage ../applications/version-management/sourcehut { };
 
   sshfs-fuse = callPackage ../tools/filesystems/sshfs-fuse { };
   sshfs = sshfs-fuse; # added 2017-08-14
@@ -6377,6 +6385,8 @@ in
   tiny8086 = callPackage ../applications/virtualization/8086tiny { };
 
   tinyemu = callPackage ../applications/virtualization/tinyemu { };
+
+  tinyprog = callPackage ../development/tools/misc/tinyprog { };
 
   tinyproxy = callPackage ../tools/networking/tinyproxy {};
 
@@ -8264,6 +8274,8 @@ in
     inherit (darwin.apple_sdk.frameworks) CoreServices Security;
   };
 
+  sagittarius-scheme = callPackage ../development/compilers/sagittarius-scheme {};
+
   sbclBootstrap = callPackage ../development/compilers/sbcl/bootstrap.nix {};
   sbcl = callPackage ../development/compilers/sbcl {};
 
@@ -9107,11 +9119,7 @@ in
   bison = bison3;
   yacc = bison; # TODO: move to aliases.nix
 
-  blackmagic = callPackage ../development/tools/misc/blackmagic {
-    stdenv = gcc6Stdenv;
-    gcc-arm-embedded = pkgsCross.arm-embedded.buildPackages.gcc;
-    binutils-arm-embedded = pkgsCross.arm-embedded.buildPackages.binutils;
-  };
+  blackmagic = callPackage ../development/tools/misc/blackmagic { };
 
   bloaty = callPackage ../development/tools/bloaty { };
 
@@ -9918,6 +9926,8 @@ in
   spoofer = callPackage ../tools/networking/spoofer { };
 
   spoofer-gui = callPackage ../tools/networking/spoofer { withGUI = true; };
+
+  spooles = callPackage ../development/libraries/science/math/spooles {};
 
   sqlcheck = callPackage ../development/tools/database/sqlcheck { };
 
@@ -10763,6 +10773,8 @@ in
   givaro_3_7 = callPackage ../development/libraries/givaro/3.7.nix {};
 
   ghp-import = callPackage ../development/tools/ghp-import { };
+
+  ghcid = haskellPackages.ghcid.bin;
 
   icon-lang = callPackage ../development/interpreters/icon-lang { };
 
@@ -14786,6 +14798,12 @@ in
     boost = boost159;
   };
 
+  mysql80 = callPackage ../servers/sql/mysql/8.0.x.nix {
+    inherit (darwin) cctools developer_cmds;
+    inherit (darwin.apple_sdk.frameworks) CoreServices;
+    boost = boost169; # Configure checks for specific version.
+  };
+
   mysql_jdbc = callPackage ../servers/sql/mysql/jdbc { };
 
   mssql_jdbc = callPackage ../servers/sql/mssql/jdbc { };
@@ -17381,6 +17399,8 @@ in
   };
 
   calcurse = callPackage ../applications/misc/calcurse { };
+
+  calculix = callPackage ../applications/science/math/calculix {};
 
   calibre = libsForQt5.callPackage ../applications/misc/calibre { };
 
@@ -20480,6 +20500,10 @@ in
   dropbox = callPackage ../applications/networking/dropbox { };
 
   dropbox-cli = callPackage ../applications/networking/dropbox/cli.nix { };
+
+  maestral = callPackage ../applications/networking/maestral { };
+
+  maestral-gui = libsForQt5.callPackage ../applications/networking/maestral { withGui = true; };
 
   insync = callPackage ../applications/networking/insync { };
 
@@ -23704,6 +23728,8 @@ in
 
   epkowa = callPackage ../misc/drivers/epkowa { };
 
+  utsushi = callPackage ../misc/drivers/utsushi { };
+
   idsk = callPackage ../tools/filesystems/idsk { };
 
   igraph = callPackage ../development/libraries/igraph { };
@@ -23918,7 +23944,7 @@ in
         in
           nixosTesting.makeTest calledTest;
 
-  nixosOptionsDoc = attrs: 
+  nixosOptionsDoc = attrs:
     (import ../../nixos/lib/make-options-doc/default.nix)
     ({ inherit pkgs lib; } // attrs);
 
