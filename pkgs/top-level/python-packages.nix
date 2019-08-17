@@ -477,6 +477,8 @@ in {
 
   clustershell = callPackage ../development/python-modules/clustershell { };
 
+  cnvkit = callPackage ../development/python-modules/cnvkit { };
+
   cozy = callPackage ../development/python-modules/cozy { };
 
   codespell = callPackage ../development/python-modules/codespell { };
@@ -880,6 +882,8 @@ in {
   py3exiv2 = callPackage ../development/python-modules/py3exiv2 { };
 
   pyfakefs = callPackage ../development/python-modules/pyfakefs {};
+
+  pyfaidx = callPackage ../development/python-modules/pyfaidx { };
 
   pyfttt = callPackage ../development/python-modules/pyfttt { };
 
@@ -1905,6 +1909,8 @@ in {
 
   pkginfo = callPackage ../development/python-modules/pkginfo { };
 
+  pre-commit = callPackage ../development/python-modules/pre-commit { };
+
   pretend = callPackage ../development/python-modules/pretend { };
 
   detox = callPackage ../development/python-modules/detox { };
@@ -2132,6 +2138,8 @@ in {
   deform = callPackage ../development/python-modules/deform { };
 
   demjson = callPackage ../development/python-modules/demjson { };
+
+  deprecated = callPackage ../development/python-modules/deprecated { };
 
   deprecation = callPackage ../development/python-modules/deprecation { };
 
@@ -5322,6 +5330,8 @@ in {
 
   units = callPackage ../development/python-modules/units { };
 
+  unittest-data-provider = callPackage ../development/python-modules/unittest-data-provider { };
+
   unittest2 = callPackage ../development/python-modules/unittest2 { };
 
   unittest-xml-reporting = callPackage ../development/python-modules/unittest-xml-reporting { };
@@ -6158,6 +6168,8 @@ in {
   wget = callPackage ../development/python-modules/wget { };
 
   runway-python = callPackage ../development/python-modules/runway-python { };
+
+  pyprof2calltree = callPackage ../development/python-modules/pyprof2calltree { };
 });
 
 in fix' (extends overrides packages)
