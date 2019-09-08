@@ -699,6 +699,8 @@ in {
 
   libmr = callPackage ../development/python-modules/libmr { };
 
+  libpebble2 = callPackage ../development/python-modules/libpebble2 { };
+
   limitlessled = callPackage ../development/python-modules/limitlessled { };
 
   lmtpd = callPackage ../development/python-modules/lmtpd { };
@@ -978,6 +980,10 @@ in {
   pynisher = callPackage ../development/python-modules/pynisher { };
 
   pyparser = callPackage ../development/python-modules/pyparser { };
+
+  pypng = callPackage ../development/python-modules/pypng { };
+
+  pypkjs = callPackage ../development/python-modules/pypkjs { };
 
   pyres = callPackage ../development/python-modules/pyres { };
 
@@ -5451,6 +5457,8 @@ in {
   webtest = callPackage ../development/python-modules/webtest { };
 
   wsgiproxy2 = callPackage ../development/python-modules/wsgiproxy2 { };
+
+  wsgiref = callPackage ../development/python-modules/wsgiref { };
 
   wurlitzer = callPackage ../development/python-modules/wurlitzer { };
 

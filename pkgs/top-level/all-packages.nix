@@ -5420,6 +5420,8 @@ in
 
   pdf2svg = callPackage ../tools/graphics/pdf2svg { };
 
+  pebblesdk = callPackage ../development/mobile/pebblesdk { };
+
   fmodex = callPackage ../games/zandronum/fmod.nix { };
 
   pdfmod = callPackage ../applications/misc/pdfmod { };
