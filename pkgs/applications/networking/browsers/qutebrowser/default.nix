@@ -50,7 +50,7 @@ in mkDerivationWith python3Packages.buildPythonApplication rec {
     pypeg2 cssutils pyopengl attrs
     # scripts and userscripts libs
     tldextract beautifulsoup4
-    pyreadability pykeepass stem
+    pyreadability pykeepass stem setuptools
   ];
 
   patches = [
