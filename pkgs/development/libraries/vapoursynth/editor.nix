@@ -1,9 +1,9 @@
-{ stdenv, fetchFromBitbucket, makeWrapper
+{ stdenv, mkDerivation, fetchFromBitbucket, makeWrapper
 , python3, vapoursynth
 , qmake, qtbase, qtwebsockets
 }:
 
-stdenv.mkDerivation rec {
+mkDerivation rec {
   pname = "vapoursynth-editor";
   version = "R19";
 
