@@ -8,6 +8,7 @@
 , zlib, minizip, libjpeg, libpng, libtiff, libwebp, libopus
 , jsoncpp, protobuf, libvpx, srtp, snappy, nss, libevent
 , alsaLib
+, libpulseaudio
 , libcap
 , pciutils
 , systemd
@@ -157,7 +158,7 @@ EOF
     dbus zlib minizip snappy nss protobuf jsoncpp
 
     # Audio formats
-    alsaLib
+    alsaLib libpulseaudio
 
     # Text rendering
     fontconfig freetype
