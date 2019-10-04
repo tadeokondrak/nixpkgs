@@ -155,10 +155,10 @@ in
 
       environment.systemPackages = cfg.sessionPath;
 
-      environment.variables.GNOME_SESSION_DEBUG = mkIf cfg.debug "1";
+      environment.sessionVariables.GNOME_SESSION_DEBUG = mkIf cfg.debug "1";
 
       # Override GSettings schemas
-      environment.variables.NIX_GSETTINGS_OVERRIDES_DIR = "${nixos-gsettings-desktop-schemas}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas";
+      environment.sessionVariables.NIX_GSETTINGS_OVERRIDES_DIR = "${nixos-gsettings-desktop-schemas}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas";
 
        # If gnome3 is installed, build vim for gtk3 too.
       nixpkgs.config.vim.gui = "gtk3";
@@ -209,14 +209,6 @@ in
 
       networking.networkmanager.enable = mkDefault true;
 
-      # Use the correct gnome3 packageSet
-      networking.networkmanager.basePackages = {
-        inherit (pkgs) networkmanager modemmanager wpa_supplicant crda;
-        inherit (pkgs.gnome3) networkmanager-openvpn networkmanager-vpnc
-        networkmanager-openconnect networkmanager-fortisslvpn
-        networkmanager-iodine networkmanager-l2tp;
-      };
-
       services.xserver.updateDbusEnvironment = true;
 
       # Needed for themes and backgrounds
@@ -229,6 +221,7 @@ in
       services.colord.enable = mkDefault true;
       services.gnome3.chrome-gnome-shell.enable = mkDefault true;
       services.gnome3.glib-networking.enable = true;
+      services.gnome3.gnome-initial-setup.enable = mkDefault true;
       services.gnome3.gnome-remote-desktop.enable = mkDefault true;
       services.gnome3.gnome-settings-daemon.enable = true;
       services.gnome3.gnome-user-share.enable = mkDefault true;
@@ -236,7 +229,8 @@ in
       services.gvfs.enable = true;
       services.system-config-printer.enable = (mkIf config.services.printing.enable (mkDefault true));
       services.telepathy.enable = mkDefault true;
-      systemd.packages = [ pkgs.gnome3.vino ];
+
+      systemd.packages = with pkgs.gnome3; [ vino gnome-session ];
 
       services.avahi.enable = mkDefault true;
 
@@ -329,10 +323,10 @@ in
 
       # Let nautilus find extensions
       # TODO: Create nautilus-with-extensions package
-      environment.variables.NAUTILUS_EXTENSION_DIR = "${config.system.path}/lib/nautilus/extensions-3.0";
+      environment.sessionVariables.NAUTILUS_EXTENSION_DIR = "${config.system.path}/lib/nautilus/extensions-3.0";
 
       # Override default mimeapps for nautilus
-      environment.variables.XDG_DATA_DIRS = [ "${mimeAppsList}/share" ];
+      environment.sessionVariables.XDG_DATA_DIRS = [ "${mimeAppsList}/share" ];
 
       environment.pathsToLink = [
         "/share/nautilus-python/extensions"

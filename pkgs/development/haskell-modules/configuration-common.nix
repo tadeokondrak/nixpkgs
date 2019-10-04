@@ -146,16 +146,11 @@ self: super: {
     else super.halive;
 
   # Hakyll's tests are broken on Darwin (3 failures); and they require util-linux
-  hakyll = appendPatch
-    (if pkgs.stdenv.isDarwin
+  hakyll = if pkgs.stdenv.isDarwin
     then dontCheck (overrideCabal super.hakyll (drv: {
       testToolDepends = [];
     }))
-    else super.hakyll)
-    (pkgs.fetchpatch {
-      url = https://github.com/jaspervdj/hakyll/commit/25a4460b75b3c9f3ce339b3311b084d92994f5f1.patch;
-      sha256 = "sha256-F59WHt52LOKGsGoaD3LAIZFEMe9s9WHfGxQgSh9Q8uQ=";
-    });
+    else super.hakyll;
 
   double-conversion = if !pkgs.stdenv.isDarwin
     then super.double-conversion
@@ -327,7 +322,6 @@ self: super: {
   lvmrun = disableHardening (dontCheck super.lvmrun) ["format"];
   matplotlib = dontCheck super.matplotlib;
   memcache = dontCheck super.memcache;
-  MemoTrie = dontHaddock (dontCheck super.MemoTrie);
   metrics = dontCheck super.metrics;
   milena = dontCheck super.milena;
   modular-arithmetic = dontCheck super.modular-arithmetic; # tests require a very old Glob (0.7.*)
@@ -1041,6 +1035,8 @@ self: super: {
     generateOptparseApplicativeCompletion "dhall" (
       dontCheck super.dhall
   );
+  dhall_1_26_1 = dontCheck super.dhall_1_26_1;
+
 
   # Missing test files in source distribution, fixed once 1.4.0 is bumped
   # https://github.com/dhall-lang/dhall-haskell/pull/997
@@ -1060,12 +1056,13 @@ self: super: {
   # https://github.com/haskell-hvr/hgettext/issues/14
   hgettext = doJailbreak super.hgettext;
 
+  # 2.23.0 supports GHC 8.x and up
+  haddock = super.haddock_2_22_0;
   # haddock-api-2.22.0: Break out of “QuickCheck ==2.11.*, hspec >=2.4.4 && <2.6”
-  haddock-api = dontHaddock (doJailbreak (super.haddock-api));
+  haddock-api = dontHaddock (doJailbreak (super.haddock-api_2_22_0));
 
   # The test suite is broken. Break out of "base-compat >=0.9.3 && <0.10, hspec >=2.4.4 && <2.5".
   haddock-library = doJailbreak (dontCheck super.haddock-library);
-  # haddock-library_1_6_0 = doJailbreak (dontCheck super.haddock-library_1_6_0);
 
   # Generate shell completion.
   cabal2nix = generateOptparseApplicativeCompletion "cabal2nix" super.cabal2nix;
@@ -1197,8 +1194,8 @@ self: super: {
   temporary-resourcet = doJailbreak super.temporary-resourcet;
 
   # Requires dhall >= 1.23.0
-  ats-pkg = super.ats-pkg.override { dhall = self.dhall_1_26_0; };
-  dhall-to-cabal = super.dhall-to-cabal.override { dhall = self.dhall_1_26_0; };
+  ats-pkg = super.ats-pkg.override { dhall = self.dhall_1_26_1; };
+  dhall-to-cabal = super.dhall-to-cabal.override { dhall = self.dhall_1_26_1; };
 
   # Test suite doesn't work with current QuickCheck
   # https://github.com/pruvisto/heap/issues/11
@@ -1208,7 +1205,7 @@ self: super: {
   constraints-deriving = dontCheck super.constraints-deriving;
 
   # need newer version of ghc-libparser
-  hlint = super.hlint.override { ghc-lib-parser = self.ghc-lib-parser_8_8_0_20190723; };
+  hlint = super.hlint.override { ghc-lib-parser = self.ghc-lib-parser_8_8_1; };
 
   # https://github.com/sol/hpack/issues/366
   hpack = self.hpack_0_32_0;

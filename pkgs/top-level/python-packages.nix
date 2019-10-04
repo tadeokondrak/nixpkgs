@@ -523,6 +523,10 @@ in {
 
   dominate = callPackage ../development/python-modules/dominate { };
 
+  dotnetcore2 = callPackage ../development/python-modules/dotnetcore2 {
+    inherit (pkgs) substituteAll dotnet-sdk;
+  };
+
   emcee = callPackage ../development/python-modules/emcee { };
 
   emailthreads = callPackage ../development/python-modules/emailthreads { };
@@ -558,6 +562,10 @@ in {
   dogtail = callPackage ../development/python-modules/dogtail { };
 
   diff-match-patch = callPackage ../development/python-modules/diff-match-patch { };
+
+  entrance = callPackage ../development/python-modules/entrance { routerFeatures = false; };
+
+  entrance-with-router-features = callPackage ../development/python-modules/entrance { routerFeatures = true; };
 
   eradicate = callPackage ../development/python-modules/eradicate {  };
 
@@ -685,6 +693,8 @@ in {
 
   inquirer = callPackage ../development/python-modules/inquirer { };
 
+  janus = callPackage ../development/python-modules/janus { };
+
   jira = callPackage ../development/python-modules/jira { };
 
   jwcrypto = callPackage ../development/python-modules/jwcrypto { };
@@ -723,7 +733,7 @@ in {
 
   mailman-web = disabledIf (!isPy3k) (callPackage ../servers/mail/mailman/web.nix { });
 
-  mailmanclient = callPackage ../development/python-modules/mailmanclient { };
+  mailmanclient = disabledIf (!isPy3k) (callPackage ../development/python-modules/mailmanclient { });
 
   mailman-hyperkitty = callPackage ../development/python-modules/mailman-hyperkitty { };
 
@@ -852,6 +862,8 @@ in {
   pymystem3 = callPackage ../development/python-modules/pymystem3 { };
 
   pymysql = callPackage ../development/python-modules/pymysql { };
+
+  pymupdf = callPackage ../development/python-modules/pymupdf { };
 
   Pmw = callPackage ../development/python-modules/Pmw { };
 
@@ -1057,6 +1069,8 @@ in {
   pytesseract = callPackage ../development/python-modules/pytesseract { };
 
   pytest-click = callPackage ../development/python-modules/pytest-click { };
+
+  pytest-check = callPackage ../development/python-modules/pytest-check { };
 
   pytest-env = callPackage ../development/python-modules/pytest-env { };
 
@@ -1282,6 +1296,8 @@ in {
   aafigure = callPackage ../development/python-modules/aafigure { };
 
   addic7ed-cli = callPackage ../development/python-modules/addic7ed-cli { };
+
+  algebraic-data-types = callPackage ../development/python-modules/algebraic-data-types { };
 
   altair = callPackage ../development/python-modules/altair { };
 
@@ -1904,6 +1920,8 @@ in {
 
   eth-utils = callPackage ../development/python-modules/eth-utils { };
 
+  impacket = callPackage ../development/python-modules/impacket { };
+
   jsonrpc-async = callPackage ../development/python-modules/jsonrpc-async { };
 
   jsonrpc-base = callPackage ../development/python-modules/jsonrpc-base { };
@@ -2149,9 +2167,9 @@ in {
 
   libais = callPackage ../development/python-modules/libais { };
 
-  libfdt = disabledIf isPy3k (toPythonModule (pkgs.dtc.override {
-    python2 = python;
-  }));
+  libfdt = toPythonModule (pkgs.dtc.override {
+    inherit python;
+  });
 
   libtmux = callPackage ../development/python-modules/libtmux { };
 
@@ -3117,8 +3135,6 @@ in {
 
   flask_migrate = callPackage ../development/python-modules/flask-migrate { };
 
-  flask_oauthlib = callPackage ../development/python-modules/flask-oauthlib { };
-
   flask-paginate = callPackage ../development/python-modules/flask-paginate { };
 
   flask_principal = callPackage ../development/python-modules/flask-principal { };
@@ -3161,7 +3177,10 @@ in {
 
   pyro-ppl = callPackage ../development/python-modules/pyro-ppl {};
 
-  opt-einsum = callPackage ../development/python-modules/opt-einsum {};
+  opt-einsum = if isPy27 then
+      callPackage ../development/python-modules/opt-einsum/2.nix {}
+    else
+      callPackage ../development/python-modules/opt-einsum {};
 
   pytorchWithCuda = self.pytorch.override {
     cudaSupport = true;
@@ -3832,13 +3851,6 @@ in {
 
   msgpack-numpy = callPackage ../development/python-modules/msgpack-numpy {};
 
-  msgpack-python = self.msgpack.overridePythonAttrs {
-    pname = "msgpack-python";
-    postPatch = ''
-      substituteInPlace setup.py --replace "TRANSITIONAL = False" "TRANSITIONAL = True"
-    '';
-  };
-
   msrplib = callPackage ../development/python-modules/msrplib { };
 
   multipledispatch = callPackage ../development/python-modules/multipledispatch { };
@@ -3888,6 +3900,8 @@ in {
   pympler = callPackage ../development/python-modules/pympler { };
 
   pymysqlsa = callPackage ../development/python-modules/pymysqlsa { };
+
+  merkletools = callPackage ../development/python-modules/merkletools { };
 
   monosat = disabledIf (!isPy3k) (pkgs.monosat.python { inherit buildPythonPackage; inherit (self) cython; });
 
@@ -4204,6 +4218,8 @@ in {
   pgpy = callPackage ../development/python-modules/pgpy { };
 
   pickleshare = callPackage ../development/python-modules/pickleshare { };
+
+  picos = callPackage ../development/python-modules/picos { };
 
   piep = callPackage ../development/python-modules/piep { };
 
@@ -4680,6 +4696,8 @@ in {
   rfc6555 = callPackage ../development/python-modules/rfc6555 { };
 
   qdarkstyle = callPackage ../development/python-modules/qdarkstyle { };
+
+  qds_sdk = callPackage ../development/python-modules/qds_sdk { };
 
   quamash = callPackage ../development/python-modules/quamash { };
 
@@ -5725,6 +5743,8 @@ in {
 
   basemap = callPackage ../development/python-modules/basemap { };
 
+  dict2xml = callPackage ../development/python-modules/dict2xml { };
+
   dicttoxml = callPackage ../development/python-modules/dicttoxml { };
 
   markdown2 = callPackage ../development/python-modules/markdown2 { };
@@ -6276,6 +6296,8 @@ in {
   runway-python = callPackage ../development/python-modules/runway-python { };
 
   pyprof2calltree = callPackage ../development/python-modules/pyprof2calltree { };
+
+  hcloud = callPackage ../development/python-modules/hcloud { };
 });
 
 in fix' (extends overrides packages)

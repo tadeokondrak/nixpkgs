@@ -13,13 +13,19 @@
   <title>Highlights</title>
 
   <para>
-   In addition to numerous new and upgraded packages, this release has the following highlights:
+   In addition to numerous new and upgraded packages, this release has the
+   following highlights:
   </para>
 
   <itemizedlist>
    <listitem>
     <para>
      Support is planned until the end of October 2020, handing over to 20.09.
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     Postgresql for NixOS service now defaults to v11.
     </para>
    </listitem>
   </itemizedlist>
@@ -41,6 +47,7 @@
     <para />
    </listitem>
   </itemizedlist>
+
  </section>
 
  <section xmlns="http://docbook.org/ns/docbook"
@@ -51,7 +58,8 @@
   <title>Backward Incompatibilities</title>
 
   <para>
-   When upgrading from a previous release, please be aware of the following incompatible changes:
+   When upgrading from a previous release, please be aware of the following
+   incompatible changes:
   </para>
 
   <itemizedlist>
@@ -70,7 +78,7 @@
 
   <itemizedlist>
    <listitem>
-    <para />
+     <para>SD images are now compressed by default using <literal>bzip2</literal>.</para>
    </listitem>
   </itemizedlist>
  </section>

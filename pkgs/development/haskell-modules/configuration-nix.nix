@@ -53,7 +53,7 @@ self: super: builtins.intersectAttrs super {
 
   # Use the default version of mysql to build this package (which is actually mariadb).
   # test phase requires networking
-  mysql = dontCheck (super.mysql.override { mysql = pkgs.mysql.connector-c; });
+  mysql = dontCheck (super.mysql.override { mysql = pkgs.libmysqlclient; });
 
   # CUDA needs help finding the SDK headers and libraries.
   cuda = overrideCabal super.cuda (drv: {
@@ -94,11 +94,10 @@ self: super: builtins.intersectAttrs super {
   # Won't find it's header files without help.
   sfml-audio = appendConfigureFlag super.sfml-audio "--extra-include-dirs=${pkgs.openal}/include/AL";
 
-  cachix = overrideCabal (addBuildTools (enableSeparateBinOutput super.cachix) [pkgs.boost]) (drv: {
-    postPatch = (drv.postPatch or "") + ''
-      substituteInPlace cachix.cabal --replace "c++14" "c++17"
-    '';
-  });
+  # profiling is disabled to allow C++/C mess to work, which is fixed in GHC 8.8
+  cachix = disableLibraryProfiling super.cachix;
+
+  niv = enableSeparateBinOutput super.niv;
 
   ghcid = enableSeparateBinOutput super.ghcid;
 
@@ -589,8 +588,11 @@ self: super: builtins.intersectAttrs super {
   snap-server = dontCheck super.snap-server;
 
   # Tests require internet
-  dhall_1_26_0 = dontCheck super.dhall_1_26_0;
   http-download = dontCheck super.http-download;
   pantry = dontCheck super.pantry;
 
+  # Hadolint wants to build a statically linked binary by default.
+  hadolint = overrideCabal super.hadolint (drv: {
+    preConfigure = "sed -i -e /ld-options:/d hadolint.cabal";
+  });
 }

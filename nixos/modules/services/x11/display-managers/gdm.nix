@@ -42,10 +42,7 @@ in
     services.xserver.displayManager.gdm = {
 
       enable = mkEnableOption ''
-        GDM as the display manager.
-        <emphasis>GDM in NixOS is not well-tested with desktops other
-        than GNOME, so use with caution, as it could render the
-        system unusable.</emphasis>
+        GDM, the GNOME Display Manager
       '';
 
       debug = mkEnableOption ''
@@ -153,6 +150,11 @@ in
           mkdir -p /run/gdm/.config/pulse
           ln -sf ${pulseConfig} /run/gdm/.config/pulse/default.pa
           chown -R gdm:gdm /run/gdm/.config
+        '' + optionalString config.services.gnome3.gnome-initial-setup.enable ''
+          # Create stamp file for gnome-initial-setup to prevent run.
+          cat - > /run/gdm/.config/gnome-initial-setup-done <<- EOF
+          yes
+          EOF
         '';
       };
 
@@ -162,6 +164,10 @@ in
       "rc-local.service"
       "systemd-machined.service"
       "systemd-user-sessions.service"
+      "getty@tty1.service"
+    ];
+    systemd.services.display-manager.conflicts = [
+      "getty@tty1.service"
     ];
 
     systemd.services.display-manager.serviceConfig = {
