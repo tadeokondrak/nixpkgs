@@ -14405,6 +14405,8 @@ in
 
   vaapiVdpau = callPackage ../development/libraries/vaapi-vdpau { };
 
+  varlink = callPackage ../development/libraries/varlink { };
+
   vale = callPackage ../tools/text/vale { };
 
   vamp = callPackage ../development/libraries/audio/vamp { };
