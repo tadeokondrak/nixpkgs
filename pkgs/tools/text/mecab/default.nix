@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, mecab-ipadic }:
+{ lib, stdenv, fetchurl, mecab-ipadic, charset ? "euc-jp" }:
 
 let
   mecab-base = import ./base.nix { inherit fetchurl; };
@@ -9,6 +9,10 @@ stdenv.mkDerivation (mecab-base // {
     postInstall = ''
       sed -i 's|^dicdir = .*$|dicdir = ${mecab-ipadic}|' "$out/etc/mecabrc"
     '';
+
+    configureFlags = [
+      "--with-charset=${charset}"
+    ];
 
     meta = with lib; {
       description = "Japanese morphological analysis system";

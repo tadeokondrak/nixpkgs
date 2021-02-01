@@ -6115,6 +6115,18 @@ in
       };
     };
 
+  mecab-utf8 =
+    let
+      mecab-nodic = callPackage ../tools/text/mecab/nodic.nix { };
+    in
+    callPackage ../tools/text/mecab {
+      mecab-ipadic = callPackage ../tools/text/mecab/ipadic.nix {
+        inherit mecab-nodic;
+        charset = "utf-8";
+      };
+      charset = "utf-8";
+    };
+
   mediawiki = callPackage ../servers/web-apps/mediawiki { };
 
   memtier-benchmark = callPackage ../tools/networking/memtier-benchmark { };

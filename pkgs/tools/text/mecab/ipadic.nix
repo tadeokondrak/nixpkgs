@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, mecab-nodic }:
+{ stdenv, fetchurl, mecab-nodic, charset ? "euc-jp" }:
 
 stdenv.mkDerivation {
   pname = "mecab-ipadic";
@@ -13,6 +13,6 @@ stdenv.mkDerivation {
   buildInputs = [ mecab-nodic ];
 
   configurePhase = ''
-    ./configure --with-dicdir="$out"
+    ./configure --with-dicdir="$out" --with-charset=${charset}
   '';
 }
